@@ -5,7 +5,7 @@ import { readExistingDefinitions } from "./definition.ts";
 import type { Definition } from "../typings/definition.ts";
 
 Deno.test("Reads existing definitions", async () => {
-  const testExistingDefinitionsPath = "./output/test/definitions.csv";
+  const testExistingDefinitionsPath = "./output/test/definitions.json";
   const testDefinitions: Definition[] = [{
     word: 'test',
     phonetics: [],

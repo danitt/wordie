@@ -10,7 +10,7 @@ https://github.com/umbopepato/velociraptor
 3. Run `vr start`
 
 4. On completion, two files will be generated in the ./output directory
-  - 'terms.json' - words with definitions
+  - 'definitions.json' - definitions for given word list
   - 'failed.csv' - list of words where definitions could not be found
 
 5. (optional) Produce an Anki-compatible export from the terms.json file, with `vr anki`

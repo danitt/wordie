@@ -6,7 +6,7 @@ import { readJson } from "./fs.ts";
 /**
  * Reads existing definition entries, or returns empty array
  */
-export async function readExistingDefinitions(definitionsFilePath = "./output/words.json"): Promise<Definition[]> {
+export async function readExistingDefinitions(definitionsFilePath = "./output/definitions.json"): Promise<Definition[]> {
   try {
     if (!existsSync(definitionsFilePath)) {
       // No existing definitions, return empty array
