@@ -44,7 +44,7 @@ export async function writeJson(relativePath: string, data: unknown): Promise<vo
 /**
  * Reads JSON content at given path, returning undefined if not found or error
  */
-export async function readJson<Contents = unknown>(filePath: string): Promise<Contents | void> {
+export async function readJson<Contents = unknown>(filePath: string): Promise<Contents> {
   try {
     const fileData = await readTextFile(filePath);
     return JSON.parse(fileData);
