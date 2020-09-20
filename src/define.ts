@@ -32,6 +32,7 @@ export async function generateDefinitions(): Promise<void> {
     // Validate
     if (!wordDefinitions?.length) {
       // No definitions, add to failed words
+      console.warn('Failed to retrieve definition for', word);
       failedWords.push(word);
       continue;
     }
