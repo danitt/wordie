@@ -3,6 +3,7 @@ import { ScriptsConfiguration } from "https://deno.land/x/velociraptor@v1.0.0-be
 export default <ScriptsConfiguration>{
   scripts: {
     start: "deno run --allow-read --allow-write --allow-net --unstable src/define.ts",
+    anki: "deno run --allow-read --allow-write --unstable src/anki.ts",
     test: "deno test --allow-read --allow-write --unstable"
   },
 };
