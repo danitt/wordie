@@ -3,7 +3,7 @@ import { existsSync } from "https://deno.land/std/fs/mod.ts";
 import { readJson, readTextFile, writeJson, writeTextFile } from './fs.ts';
 
 Deno.test("Reads/writes text files", async () => {
-  const testFilePath = "./output/testFile.csv";
+  const testFilePath = "./output/test/testFile.csv";
   existsSync(testFilePath) && Deno.removeSync(testFilePath);
   const testData = "banana";
   await writeTextFile(testFilePath, testData);
@@ -12,7 +12,7 @@ Deno.test("Reads/writes text files", async () => {
 });
 
 Deno.test("Reads/writes json files", async () => {
-  const testFilePath = "./output/testFile.json";
+  const testFilePath = "./output/test/testFile.json";
   existsSync(testFilePath) && Deno.removeSync(testFilePath);
   const testData = { banana: true };
   await writeJson(testFilePath, testData);
