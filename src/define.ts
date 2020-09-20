@@ -10,7 +10,9 @@ import { writeJson, writeTextFile } from "./utils/fs.ts";
  */
 export async function generateDefinitions(): Promise<void> {
   const definitions: Definition[] = await readExistingDefinitions();
+  const definitionsPath = "./output/definitions.json";
   const failedWords: string[] = await getFailedWords();
+  const failedWordsPath = "./output/failed.csv";
 
   // Load word list, excluding any already defined
   const definedWords: string[] = definitions.map(d => d.word);
@@ -34,23 +36,18 @@ export async function generateDefinitions(): Promise<void> {
       // No definitions, add to failed words
       console.warn('Failed to retrieve definition for', word);
       failedWords.push(word);
+      await writeTextFile(failedWordsPath, failedWords.join("\n"));
       continue;
     }
-
-    // Append to array
+    
+    // Update definitions file
     definitions.push(wordDefinitions[0]);
+    await writeJson(definitionsPath, { definitions });
 
     // Throttle queries
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  // Write definition file
-  const definitionsPath = "./output/definitions.json";
-  await writeJson(definitionsPath, { definitions });
-
-  // Write failed words
-  const failedWordsPath = "./output/failed.csv";
-  await writeTextFile(failedWordsPath, failedWords.join('\n'));
 }
 
 await generateDefinitions();
