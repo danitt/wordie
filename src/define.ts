@@ -26,6 +26,7 @@ export async function generateDefinitions(): Promise<void> {
   }
 
   // Iterate new words and fetch definitions
+  console.info(`Found ${words.length} new words to define`);
   for (const word of words) {
     // Get definition
     console.info('Defining word:', word);
