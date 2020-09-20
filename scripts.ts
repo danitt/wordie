@@ -2,6 +2,7 @@ import { ScriptsConfiguration } from "https://deno.land/x/velociraptor@v1.0.0-be
 
 export default <ScriptsConfiguration>{
   scripts: {
-    start: "deno run src/index.ts",
+    start: "deno run --allow-read --allow-write --unstable src/index.ts",
+    test: "deno test --allow-read --allow-write --unstable"
   },
 };
