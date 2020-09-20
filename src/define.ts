@@ -15,9 +15,11 @@ export async function generateDefinitions(): Promise<void> {
   const failedWordsPath = "./output/failed.csv";
 
   // Load word list, excluding any already defined
-  const definedWords: string[] = definitions.map(d => d.word);
+  const definedWords: string[] = definitions.map(d => String(d.word).toLowerCase());
   const allWords = await getWordList();
-  const words = allWords.filter(word => !definedWords.includes(word));
+  const words = allWords
+    .map(word => String(word).toLowerCase())
+    .filter(word => !definedWords.includes(word));
 
   // Validate word list
   if (!words || !words.length) {
