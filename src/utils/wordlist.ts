@@ -9,7 +9,7 @@ export async function getWordList(wordlistPath = './words.csv'): Promise<string[
   try {
     const wordFileStr = await readTextFile(wordlistPath);
     const wordlistParsed = await parse(wordFileStr, {
-      header: false,
+      skipFirstRow: false,
     }) as string[][];
     const words: string[] = wordlistParsed
       // Extract first value from every line
@@ -34,7 +34,7 @@ export async function getFailedWords(failedWordsPath = "./output/failed.csv"): P
     }
     const wordFileStr = await readTextFile(failedWordsPath);
     const wordlistParsed = await parse(wordFileStr, {
-      header: false,
+      skipFirstRow: false,
     }) as string[][];
     const words: string[] = wordlistParsed
       // Extract first value from every line
