@@ -1,5 +1,5 @@
-import { assert } from "https://deno.land/std@0.70.0/testing/asserts.ts";
-import { existsSync } from "https://deno.land/std/fs/mod.ts";
+import { assert } from "https://deno.land/std@0.105.0/testing/asserts.ts";
+import { existsSync } from "https://deno.land/std@0.105.0/fs/mod.ts";
 import { writeJson } from "./fs.ts";
 import { readExistingDefinitions } from "./definition.ts";
 import type { Definition } from "../typings/definition.ts";

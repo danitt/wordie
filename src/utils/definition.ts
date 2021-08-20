@@ -1,4 +1,4 @@
-import { existsSync } from "https://deno.land/std/fs/mod.ts";
+import { existsSync } from "https://deno.land/std@0.105.0/fs/mod.ts";
 
 import type { Definition, DefinitionFile } from "../typings/definition.ts";
 import { readJson } from "./fs.ts";

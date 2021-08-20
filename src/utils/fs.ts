@@ -1,4 +1,4 @@
-import { ensureFileSync } from "https://deno.land/std/fs/mod.ts";
+import { ensureFileSync } from "https://deno.land/std@0.105.0/fs/mod.ts";
 
 /**
  * Reads file content at given path, returning undefined if not found or error

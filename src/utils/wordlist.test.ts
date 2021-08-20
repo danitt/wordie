@@ -1,5 +1,5 @@
-import { assert } from "https://deno.land/std@0.70.0/testing/asserts.ts";
-import { existsSync } from "https://deno.land/std/fs/mod.ts";
+import { assert } from "https://deno.land/std@0.105.0/testing/asserts.ts";
+import { existsSync } from "https://deno.land/std@0.105.0/fs/mod.ts";
 import { writeTextFile } from "./fs.ts";
 import { getFailedWords, getWordList } from "./wordlist.ts";
 

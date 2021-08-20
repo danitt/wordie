@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std/encoding/csv.ts";
-import { existsSync } from "https://deno.land/std/fs/mod.ts";
+import { parse } from "https://deno.land/std@0.105.0/encoding/csv.ts";
+import { existsSync } from "https://deno.land/std@0.105.0/fs/mod.ts";
 import { readTextFile } from "./fs.ts";
 
 /**
