@@ -15,9 +15,9 @@ pub struct Definition {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Phonetic {
     // Phonetic pronunciation
-    pub text: String,
+    pub text: Option<String>,
     // Path to audio file
-    pub audio: String,
+    pub audio: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
