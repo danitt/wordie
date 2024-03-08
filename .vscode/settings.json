@@ -1,6 +1,4 @@
 {
-  "deno.enable": true,
-  "deno.suggest.imports.hosts": {
-    "https://deno.land": true
-  }
+  "rust-analyzer.showUnlinkedFileNotification": false,
+  "editor.formatOnSave": true
 }
