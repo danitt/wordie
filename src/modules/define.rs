@@ -62,7 +62,17 @@ pub async fn generate_definitions() -> Result<(), Box<dyn std::error::Error>> {
         println!("Defining word: {}", word);
         let url = format!("https://api.dictionaryapi.dev/api/v2/entries/en/{}", word);
         let resp = client.get(url).send().await?.text().await?;
-        let word_definitions: Vec<Definition> = serde_json::from_str(&resp)?;
+        let definition_result: Result<Vec<Definition>, serde_json::Error> =
+            serde_json::from_str(&resp);
+
+        if definition_result.is_err() {
+            println!("Failed to retrieve definition for {}", word);
+            failed_words.push(word);
+            write_text_file(failed_words_path, &failed_words.join("\n")).await?;
+            continue;
+        }
+
+        let word_definitions = definition_result.unwrap();
 
         if word_definitions.is_empty() {
             println!("Failed to retrieve definition for {}", word);
