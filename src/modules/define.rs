@@ -8,9 +8,11 @@ use std::path::Path;
 use std::time::Duration;
 use tokio::time::sleep;
 
-use crate::r#const::{DEFINITIONS_JSON_PATH, FAILED_WORDS_CSV_PATH, WORDS_CSV_PATH};
+use crate::r#const::{
+    DEFINITIONS_JSON_PATH, DICTIONARY_API_URL, FAILED_WORDS_CSV_PATH, WORDS_CSV_PATH,
+};
 
-use super::typings::Definition;
+use super::typings::{Definition, DictionaryResponse};
 use super::wordlist::{get_failed_words, get_word_list};
 
 async fn read_existing_definitions() -> io::Result<Vec<Definition>> {
@@ -38,6 +40,26 @@ async fn write_text_file(path: &Path, content: &str) -> io::Result<()> {
     Ok(())
 }
 
+async fn fetch_definition(
+    client: &Client,
+    word: &str,
+) -> Result<Option<Definition>, Box<dyn std::error::Error>> {
+    let url = format!("{}/{}", DICTIONARY_API_URL, word);
+    let response: DictionaryResponse = client
+        .get(url)
+        .send()
+        .await?
+        .error_for_status()?
+        .json()
+        .await?;
+
+    if response.entries.is_empty() {
+        return Ok(None);
+    }
+
+    Ok(Some(response.into()))
+}
+
 pub async fn generate_definitions() -> Result<(), Box<dyn std::error::Error>> {
     let client = Client::new();
     let definitions_path = Path::new(DEFINITIONS_JSON_PATH);
@@ -60,28 +82,17 @@ pub async fn generate_definitions() -> Result<(), Box<dyn std::error::Error>> {
     println!("Found {} new words to define", words.len());
     for word in words {
         println!("Defining word: {}", word);
-        let url = format!("https://api.dictionaryapi.dev/api/v2/entries/en/{}", word);
-        let resp = client.get(url).send().await?.text().await?;
-        let definition_result: Result<Vec<Definition>, serde_json::Error> =
-            serde_json::from_str(&resp);
+        let definition = match fetch_definition(&client, &word).await? {
+            Some(definition) => definition,
+            None => {
+                println!("Failed to retrieve definition for {}", word);
+                failed_words.push(word);
+                write_text_file(failed_words_path, &failed_words.join("\n")).await?;
+                continue;
+            }
+        };
 
-        if definition_result.is_err() {
-            println!("Failed to retrieve definition for {}", word);
-            failed_words.push(word);
-            write_text_file(failed_words_path, &failed_words.join("\n")).await?;
-            continue;
-        }
-
-        let word_definitions = definition_result.unwrap();
-
-        if word_definitions.is_empty() {
-            println!("Failed to retrieve definition for {}", word);
-            failed_words.push(word);
-            write_text_file(failed_words_path, &failed_words.join("\n")).await?;
-            continue;
-        }
-
-        definitions.push(word_definitions[0].clone());
+        definitions.push(definition);
         write_json(definitions_path, &definitions).await?;
 
         // throttle requests to avoid rate limiting
