@@ -13,6 +13,11 @@ enum Commands {
     Define,
     #[command(about = "Convert to Anki format")]
     Convert,
+    #[command(about = "Post three Anki words of the day to Discord")]
+    Wod {
+        #[arg(long, help = "Print the message instead of posting it")]
+        dryrun: bool,
+    },
 }
 
 pub async fn prompt() {
@@ -24,6 +29,9 @@ pub async fn prompt() {
         }
         Commands::Convert => {
             commands::convert::run().await;
+        }
+        Commands::Wod { dryrun } => {
+            commands::wod::run(dryrun).await;
         }
     }
 }
