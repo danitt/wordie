@@ -7,7 +7,7 @@ This tool scrapes term definitions from a given word list, and parses into both 
 3. Run `cargo run convert` to convert to Anki format.
 
 ## Word of the day
-`cargo run wod` logs into AnkiWeb (headless Chromium), picks three random cards from the `English` deck and posts them to a Discord channel with the definitions hidden behind spoilers. Posted words are recorded in `output/wod-history.json` and are not repeated until the deck runs out of unused words. Use `cargo run wod -- --dryrun` to print the message without posting (history is not updated).
+`cargo run wod` logs into AnkiWeb (headless Chromium), picks three random cards from the `English` deck (AnkiWeb only returns 100 search results, so cards are sampled via random `front:xx*` prefix searches, which assumes a `Front` field) and posts them to a Discord channel with the definitions hidden behind spoilers. Posted words are recorded in `output/wod-history.json` and are not repeated until the deck runs out of unused words. Use `cargo run wod -- --dryrun` to print the message without posting (history is not updated).
 
 ### Setup
 1. Install Chromium (set `CHROME_PATH` if it is not auto-detected, e.g. snap installs).

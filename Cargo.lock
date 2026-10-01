@@ -2024,6 +2024,7 @@ dependencies = [
  "dotenvy",
  "futures",
  "rand 0.10.3",
+ "regex",
  "reqwest 0.11.24",
  "serde",
  "serde_json",
